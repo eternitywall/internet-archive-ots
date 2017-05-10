@@ -49,7 +49,7 @@
 
 <div ng-repeat="result in results">
     <h3>{{ result.title }}</h3>
-    <b><a href="https://archive.org/download/{{result.identifier}}">{{ result.identifier }}</a></b>
+    <b><a href="https://archive.org/details/{{result.identifier}}">{{ result.identifier }}</a></b>
     <p>{{ result.description }}</p>
     <p>
         <button class="download" ng-click="download(result.identifier)">Show files</button>
