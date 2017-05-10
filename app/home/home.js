@@ -39,9 +39,9 @@ angular.module('myApp.home', ['ngRoute'])
         return {
             timestamp: function(hash) {
                 //https://alice.btc.calendar.opentimestamps.org/timestamp/e8fb8fa92c9c116f58c0d35d789939be69472529
-                //var url = "https://alice.btc.calendar.opentimestamps.org/timestamp/";
-                var url = "http://alice.btc.calendar.opentimestamps.org/timestamp/57cfa5c46716df9bd9e83595bce439c58108d8fcc1678f30d4c6731c3f1fa6c79ed712c66fb1ac8d4e4eb0e7";
-                //url += hash;
+                //var url = "http://alice.btc.calendar.opentimestamps.org/timestamp/57cfa5c46716df9bd9e83595bce439c58108d8fcc1678f30d4c6731c3f1fa6c79ed712c66fb1ac8d4e4eb0e7";
+                var url = "https://internetarchive.calendar.opentimestamps.org/timestamp/";
+                url += hash;
                 return $http.get(url,{responseType: "arraybuffer"});
             }
 
