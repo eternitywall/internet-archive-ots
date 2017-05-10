@@ -57,8 +57,11 @@ angular.module('myApp.home', ['ngRoute'])
                 $scope.results=data.data.response.docs;
                 $scope.results.forEach(function(item){
                     item.url = "https://archive.org/download/"+item.identifier+"/"+item.identifier+"_files.xml";
-
                 });
+
+                if($scope.results.length==0){
+                    $scope.results.push({title:'No information found'});
+                }
             });
         };
 
