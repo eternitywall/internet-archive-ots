@@ -1,0 +1,139 @@
+.repositories {
+  @include round-icons-block(&);
+  background-color: #f9f9f9;
+
+  @media (max-width: $container-responsive--width) {
+    padding: 40px 0 20px;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+
+  &-block-title {
+    @extend %block-title;
+    margin: 25px 0 15px;
+
+    @media (max-width: $container-responsive--width) {
+      margin-top: 0;
+    }
+  }
+
+  &-i {
+    width: 48%;
+    margin-right: 4%;
+    margin-top: 35px;
+    margin-bottom: 10px;
+
+    @media (max-width: $container-responsive--width) {
+      display: block;
+      width: 320px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    @media (max-width: $mobile--width) {
+      width: 100%;
+    }
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  &-icon {
+    @media (max-width: $container-responsive--width) {
+      top: 0;
+      margin-top: 0;
+    }
+
+    &:before,
+    &:after {
+      @include image-2x('../images/repositories@2x.png', 36px, 326px);
+      width: 32px;
+      height: 32px;
+      margin: -16px 0 0 -16px;
+      background-image: url(../images/repositories.png);
+    }
+
+    &_server {
+      &:before {
+        background-position: 0 -230px;
+      }
+
+      &:after {
+        background-position: 0 -198px;
+      }
+    }
+
+    &_client {
+      &:before {
+        background-position: 0 -32px;
+      }
+
+      &:after {
+        background-position: 0 0;
+      }
+    }
+
+    &_javascript {
+      &:before {
+        background-position: 0 -96px;
+      }
+
+      &:after {
+        background-position: 0 -64px;
+      }
+    }
+
+    &_python {
+      &:before,
+      &:after {
+        width: 36px;
+        height: 35px;
+        margin: -18px 0 0 -17.5px;
+      }
+
+      &:before {
+        background-position: 0 -163px;
+      }
+
+      &:after {
+        background-position: 0 -128px;
+      }
+    }
+
+    &_java {
+      &:before,
+      &:after {
+        width: 25px;
+        margin-left: -12.5px;
+      }
+
+      &:before {
+        background-position: 0 -294px;
+      }
+
+      &:after {
+        background-position: 0 -262px;
+      }
+    }
+  }
+
+  &-name {
+    @include image-2x('../images/github@2x.png', 24px, 23px);
+    display: block;
+    margin-top: 5px;
+    padding-left: 34px;
+    background-image: url(../images/github.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    color: #004eaa;
+    line-height: 24px;
+    font-size: 14px;
+
+    @media (max-width: $container-responsive--width) {
+      margin-top: 10px;
+    }
+  }
+}
