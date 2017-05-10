@@ -19,10 +19,10 @@
             <td><a download target="_blank" href="{{file.url}}">{{file._name}}</a></td>
             <td><span>[{{file.size}}]</span></td>
             <td><span>{{file.sha1}}</span></td>
-            <td><button ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></td>
-            <td><a target="_blank" href="https://opentimestamps.org/draft/info.html?ots={{file.ots}}">INFO</td>
+            <td><button ng-hide="{{file.hidedownload}}" ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></td>
+            <td>&nbsp;<a ng-hide="{{file.hideinfo}}" target="_blank" href="https://opentimestamps.org/draft/info.html?ots={{file.ots}}">INFO</td>
             <td><span>{{file.status}}</span></td>
-
+            <td><span>{{file.hideinfo}}</span></td>
     </tr>
 
     </table>

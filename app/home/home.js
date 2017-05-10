@@ -57,6 +57,7 @@ angular.module('myApp.home', ['ngRoute'])
                 $scope.results=data.data.response.docs;
                 $scope.results.forEach(function(item){
                     item.url = "https://archive.org/download/"+item.identifier+"/"+item.identifier+"_files.xml";
+
                 });
             });
         };
@@ -84,6 +85,10 @@ angular.module('myApp.home', ['ngRoute'])
 
                 result.files.forEach(function(file){
                     file.url="https://archive.org/download/"+identifier+"/"+file._name;
+                    if(!file.sha1) {
+                      file.hidedownload = true;
+                    }
+                    file.hideinfo = true;
                 });
 
             });
@@ -120,6 +125,8 @@ angular.module('myApp.home', ['ngRoute'])
                 file.ots=ots;
                 console.log(ots);
                 download(name+".ots",buffer);
+                file.hideinfo=false;
+                $scope.$apply();
 
 
                 const OpenTimestamps = require('javascript-opentimestamps');
