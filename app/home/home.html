@@ -15,12 +15,11 @@
 
     <table>
     <tr ng-repeat="file in result.files">
-            <td><p>{{file._name}}</p></td>
+            <td><a download target="_blank" href="{{file.url}}">{{file._name}}</a></td>
             <td><span>[{{file.size}}]</span></td>
             <td><span>{{file.sha1}}</span></td>
-            <td><a download target="_blank" href="{{file.url}}">{{file.url}}</a></td>
             <td><button ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></td>
-            <td><a target="_blank" href="https://opentimestamps.it/draft/info.html?ots={{file.ots}}">INFO</td>
+            <td><a target="_blank" href="https://opentimestamps.org/draft/info.html?ots={{file.ots}}">INFO</td>
             <td><span>{{file.status}}</span></td>
 
     </tr>

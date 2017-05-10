@@ -9,8 +9,6 @@ angular.module('myApp.home', ['ngRoute'])
     templateUrl: '/home/home.html',
     controller: 'HomeCtrl'
   });
-        $httpProvider.defaults.useXDomain = false;
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }])
 .factory('ArchiveService', function($http) {
       return {
@@ -51,7 +49,7 @@ angular.module('myApp.home', ['ngRoute'])
 
 .controller('HomeCtrl', function($scope,ArchiveService,OpenTimestampsService) {
         $scope.results = [];
-        $scope.input='opentimestamps';
+        $scope.input='';
 
         $scope.search = function(){
             ArchiveService.search($scope.input).then(function(data){
@@ -124,7 +122,6 @@ angular.module('myApp.home', ['ngRoute'])
                 console.log(ots);
                 download(name+".ots",buffer);
 
-                verify(buffer,hexToBytes(hash),file);
 
                 OpenTimestamps.verify(buffer, hexToBytes(hash), true).then(function(result){
                     if (result === undefined) {
@@ -227,20 +224,4 @@ angular.module('myApp.home', ['ngRoute'])
             return bytes;
         };
 
-
-        function verify(ots,hash,scope){
-            const verifyPromise = OpenTimestamps.verify(ots, hash, true);
-            verifyPromise.then(function(result) {
-                if (result === undefined) {
-                    console.log('Pending or Bad attestation');
-                    scope.status='Pending or Bad attestation';
-                } else {
-                    console.log('Success! Bitcoin attests data existed as of ' + (new Date(result * 1000)));
-                    scope.status='Success! Bitcoin attests data existed as of ' + (new Date(result * 1000));
-                }
-            }).catch(function(err) {
-                console.log(err);
-                scope.status=err;
-            });
-        }
     });
