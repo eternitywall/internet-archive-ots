@@ -1,6 +1,5 @@
 'use strict';
 
-const OpenTimestamps = require('javascript-opentimestamps');
 
 angular.module('myApp.home', ['ngRoute'])
 
@@ -73,7 +72,7 @@ angular.module('myApp.home', ['ngRoute'])
                 // get scope result item
                 var result;
                 $scope.results.forEach(function(item){
-                    if(item.identifier == identifier){
+                    if(item.identifier === identifier){
                         result = item;
                     }
                 });
@@ -88,14 +87,14 @@ angular.module('myApp.home', ['ngRoute'])
                 });
 
             });
-        }
+        };
 
         $scope.getFile = function(identifier,name){
             ArchiveService.downloadFile(identifier,name).then(function(data) {
                 console.log(data);
                 download(identifier,data.data);
             });
-        }
+        };
 
         $scope.getOts = function(identifier,hash,name){
             OpenTimestampsService.timestamp(hash).then(function(data) {
@@ -123,6 +122,7 @@ angular.module('myApp.home', ['ngRoute'])
                 download(name+".ots",buffer);
 
 
+                const OpenTimestamps = require('javascript-opentimestamps');
                 OpenTimestamps.verify(buffer, hexToBytes(hash), true).then(function(result){
                     if (result === undefined) {
                         file.status='Pending or Bad attestation';
