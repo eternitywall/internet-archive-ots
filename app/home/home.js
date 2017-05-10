@@ -1,6 +1,5 @@
 'use strict';
 
-const OpenTimestamps = require('javascript-opentimestamps');
 
 angular.module('myApp.home', ['ngRoute'])
 
@@ -123,6 +122,7 @@ angular.module('myApp.home', ['ngRoute'])
                 download(name+".ots",buffer);
 
 
+                const OpenTimestamps = require('javascript-opentimestamps');
                 OpenTimestamps.verify(buffer, hexToBytes(hash), true).then(function(result){
                     if (result === undefined) {
                         file.status='Pending or Bad attestation';
