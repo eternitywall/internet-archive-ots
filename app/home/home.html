@@ -1,31 +1,66 @@
-<!--<p>This is the partial for view 1.</p>-->
-<form ng-submit="search()">
-<input type="text" name="input" ng-model="input" placeholder="search..."/>
-<button >Search</button>
-</form>
 
-<div ng-repeat="result in results">
-    <h2>{{ result.title }}</h2>
-    <h3>{{ result.subject }}</h3>
-    <p>{{ result.description }}</p>
-    <b>{{ result.identifier }}</b>
-    <p>
-        <!--<a href="{{result.url}}">get XML</a>-->
-        <button ng-click="download(result.identifier)">Show files</button>
+<style>
+    .container .download {
+        display: inline-block;
+        transition: .3s opacity;
+        margin-bottom: 10px;
+        padding: 0 20px;
+        background-color: #004eaa;
+        color: #fff;
+        line-height: 40px;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .smalldownload {
+        display: inline-block;
+        transition: .3s opacity;
+        margin-bottom: 5px;
+        padding: 0 20px;
+        background-color: #004eaa;
+        color: #fff;
+        line-height: 30px;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: bold;
+    }
+</style>
+
+<section class="intro">
+    <p class="timestamp-of">
+        Timestamping the Internet
     </p>
 
-    <table>
+    <div class="form-group" style="width:500px; margin: 0 auto;">
+        <input type="text" name="input" ng-model="input" placeholder="Search on Archive.org" class="form-control"/>
+    </div>
+    </br>
+    <button class="download" id="download" ng-click="search()">SEARCH</button>
+    <br>
+</section>
+
+<section class="container">
+
+<div ng-repeat="result in results">
+    <h3>{{ result.title }}</h3>
+    <b>{{ result.identifier }}</b>
+    <p>{{ result.description }}</p>
+    <p>
+        <button class="download" ng-click="download(result.identifier)">Show files</button>
+    </p>
+
+    <table style="width: 100%;">
     <tr ng-repeat="file in result.files">
             <td><a download target="_blank" href="{{file.url}}">{{file._name}}</a></td>
             <td><span>[{{file.size}}]</span></td>
             <td><span>{{file.sha1}}</span></td>
-            <td><button ng-hide="{{file.hidedownload}}" ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></td>
-            <td>&nbsp;<a ng-hide="{{file.hideinfo}}" target="_blank" href="https://opentimestamps.org/draft/info.html?ots={{file.ots}}">INFO</td>
-            <td><span>{{file.status}}</span></td>
-            <td><span>{{file.hideinfo}}</span></td>
+            <td ng-show="file.download && file.exist" ><button class="smalldownload"ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></td>
+            <td ng-hide="file.download || !file.exist" ><a class="smalldownload" target="_blank" href="https://opentimestamps.org/draft/info.html?ots={{file.ots}}">INFO OTS</a></td>
+            <td style="width: 200px;" ng-hide="file.download || !file.exist" ><span>{{file.status}}</span></td>
     </tr>
 
     </table>
 
     <hr/>
 </div>
+</section>

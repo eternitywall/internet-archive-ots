@@ -84,11 +84,14 @@ angular.module('myApp.home', ['ngRoute'])
                 }
 
                 result.files.forEach(function(file){
-                    file.url="https://archive.org/download/"+identifier+"/"+file._name;
+                    file.url = "https://archive.org/download/"+identifier+"/"+file._name;
+                    file.download = true;
+                    file.exist = true;
+
                     if(!file.sha1) {
-                      file.hidedownload = true;
+                        file.download = false;
+                        file.exist = false;
                     }
-                    file.hideinfo = true;
                 });
 
             });
@@ -125,8 +128,7 @@ angular.module('myApp.home', ['ngRoute'])
                 file.ots=ots;
                 console.log(ots);
                 download(name+".ots",buffer);
-                file.hideinfo=false;
-                $scope.$apply();
+                file.download=false;
 
 
                 const OpenTimestamps = require('javascript-opentimestamps');
