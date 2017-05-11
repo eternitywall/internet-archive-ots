@@ -52,11 +52,13 @@ angular.module('myApp.home', ['ngRoute'])
         $scope.showLoader=false;
 
         $scope.search = function(){
+            if($scope.input==""){
+                return;
+            }
             $scope.showLoader=true;
-            ArchiveService.search($scope.input).then(function(data){
-                console.log(data);
-                $scope.showLoader=false;
 
+            ArchiveService.search($scope.input).then(function(data){
+                $scope.showLoader=false;
                 $scope.results=data.data.response.docs;
                 $scope.results.forEach(function(item){
                     item.url = "https://archive.org/download/"+item.identifier+"/"+item.identifier+"_files.xml";
@@ -65,6 +67,8 @@ angular.module('myApp.home', ['ngRoute'])
                 if($scope.results.length==0){
                     $scope.results.push({title:'No information found'});
                 }
+            }).catch(function(err){
+                $scope.showLoader=false;
             });
         };
 
