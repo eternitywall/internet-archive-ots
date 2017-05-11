@@ -49,10 +49,13 @@ angular.module('myApp.home', ['ngRoute'])
 .controller('HomeCtrl', function($scope,ArchiveService,OpenTimestampsService) {
         $scope.results = [];
         $scope.input='';
+        $scope.showLoader=false;
 
         $scope.search = function(){
+            $scope.showLoader=true;
             ArchiveService.search($scope.input).then(function(data){
                 console.log(data);
+                $scope.showLoader=false;
 
                 $scope.results=data.data.response.docs;
                 $scope.results.forEach(function(item){

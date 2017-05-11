@@ -30,6 +30,33 @@
         color: #fff;
         text-decoration:none;
     }
+    .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        left: calc(50% - 60px);
+        top: calc(50% - 60px);
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .inputbar{
+        width:500px;
+        margin: 0 auto;
+    }
+    @media (max-width: 480px) {
+        .inputbar {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
 </style>
 
 <section class="intro">
@@ -37,13 +64,17 @@
         Timestamping the Internet
     </p>
 
-    <div class="form-group" style="width:500px; margin: 0 auto;">
+    <form>
+    <div class="form-group inputbar">
         <input type="text" name="input" ng-model="input" placeholder="Search on Archive.org" class="form-control"/>
     </div>
     </br>
-    <button class="download" id="download" ng-click="search()">SEARCH ON ARCHIVE.ORG</button>
+    <button type="submit" class="download" id="download" ng-click="search()">SEARCH ON ARCHIVE.ORG</button>
     <br>
+    </form>
 </section>
+
+<div class="loader" ng-show="showLoader"></div>
 
 <section class="container">
 
