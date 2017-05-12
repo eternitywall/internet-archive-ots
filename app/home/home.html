@@ -61,7 +61,7 @@
 
 <section class="intro">
     <p class="timestamp-of">
-        Timestamping the Internet
+        Timestamping the Ubuntu packages (zesty)
     </p>
 
     <form>
@@ -69,7 +69,7 @@
         <input type="text" name="input" ng-model="input" placeholder="Search on Archive.org" class="form-control"/>
     </div>
     </br>
-    <button type="submit" class="download" id="download" ng-click="search()">SEARCH ON ARCHIVE.ORG</button>
+    <button type="submit" class="download" id="download" ng-click="search()">SEARCH ON PACKAGES</button>
     <br>
     </form>
 </section>
@@ -79,24 +79,19 @@
 <section class="container">
 
 <div ng-repeat="result in results">
-    <h3>{{ result.title }}</h3>
-    <b><a href="https://archive.org/details/{{result.identifier}}">{{ result.identifier }}</a></b>
-    <p>{{ result.description }}</p>
-    <p>
-        <button class="download" ng-click="download(result.identifier)">Show files</button>
-    </p>
-
-    <table style="width: 100%;">
-    <tr ng-repeat="file in result.files">
-            <td><a download target="_blank" href="{{file.url}}">{{file._name}}</a></td>
-            <td><span>[{{file.size}}]</span></td>
-            <td><span>{{file.sha1}}</span></td>
-            <td ng-show="file.download && file.exist" ><button class="smalldownload"ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></td>
-            <td ng-hide="file.download || !file.exist" ><a class="smalldownload" target="_blank" href="https://opentimestamps.org/draft/info.html?ots={{file.ots}}">INFO OTS</a></td>
-            <td style="width: 200px;" ng-hide="file.download || !file.exist" ><span>{{file.status}}</span></td>
-    </tr>
-
-    </table>
+    <h3>{{ result.Package }}</h3>
+    <b><a target="_blank" href="{{result.Homepage}}">{{ result.Homepage }}</a></b>
+    <p>{{ result.Description }}</p>
+    <p>Maintainer: {{ result.Maintainer }}</p>
+    <p>Architecture: {{ result.Architecture }}</p>
+    <p>Version: {{ result.Version }}</p>
+    <p>Filename: <a target="_blank" href="http://archive.ubuntu.com/ubuntu/{{result.Filename}}">http://archive.ubuntu.com/ubuntu/{{ result.Filename }}</a></p>
+    <p>Size: {{ result.Size }}</p>
+    <p>SHA1: {{ result.SHA1 }}</p>
+    <p>SHA256: {{ result.SHA256 }}</p>
+    <button class="smalldownload"ng-click="getOts(result.Package,result.SHA1)">Download Ots</button>
+    <a class="smalldownload" target="_blank" href="https://opentimestamps.org/draft/info.html?ots={{result.ots}}">INFO OTS</a>
+    <span>{{result.status}}</span>
 
     <hr/>
 </div>
