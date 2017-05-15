@@ -20,16 +20,9 @@ angular.module('myApp.home', ['ngRoute'])
           download: function(identifier) {
               //https://archive.org/download/opentimestamps-calendar-backups/opentimestamps-calendar-backups_files.xml
               // redirect to : 'https://ia801509.us.archive.org/13/items/opentimestamps-calendar-backups/opentimestamps-calendar-backups_files.xml#raw';
-              var url = "https://crossorigin.me/";
-              url += "https://archive.org/download/"+identifier+"/"+identifier+"_files.xml";
-              return $http.get(url);
-          },
-          downloadFile: function(identifier,name) {
-              var url = "https://crossorigin.me/";
-              url += "https://archive.org/download/"+identifier+"/"+name;
+              var url = "https://api.eternitywall.com/archive-proxy/" + identifier;
               return $http.get(url);
           }
-
       }
 })
 .factory('OpenTimestampsService', function($http) {
