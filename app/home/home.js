@@ -65,13 +65,16 @@ angular.module('myApp.home', ['ngRoute'])
             });
         };
 
-        $scope.download = function(identifier){
+        $scope.download = function($event, identifier){
+            var tag = $event.currentTarget;
+            progress(true, tag);
             ArchiveService.download(identifier).then(function(data){
-                console.log(data.data);
+                //console.log(data.data);
                 var x2js = new X2JS();
                 var json  = x2js.xml_str2json(data.data);
-                console.log(json);
+                //console.log(json);
 
+                progress(false, tag);
 
                 // get scope result item
                 var result;
@@ -102,14 +105,14 @@ angular.module('myApp.home', ['ngRoute'])
 
         $scope.getFile = function(identifier,name){
             ArchiveService.downloadFile(identifier,name).then(function(data) {
-                console.log(data);
+                //console.log(data);
                 download(identifier,data.data);
             });
         };
 
         $scope.getOts = function(identifier,hash,name){
             OpenTimestampsService.timestamp(hash).then(function(data) {
-                console.log(data);
+                //console.log(data);
                 var file = getDocumentFile(identifier,hash);
                 file.status = 'Downloading...';
 
@@ -129,7 +132,7 @@ angular.module('myApp.home', ['ngRoute'])
 
                 var ots=bytesToHex(buffer);
                 file.ots=ots;
-                console.log(ots);
+                //console.log(ots);
                 download(name+".ots",buffer);
                 file.download=false;
 
@@ -235,5 +238,13 @@ angular.module('myApp.home', ['ngRoute'])
             }
             return bytes;
         };
+
+        function progress( value, tagButton ){
+            if(value==true) {
+                tagButton.innerHTML = '<div class="smallLoader"></div>IN PROGRESS...';
+            } else {
+                tagButton.innerHTML = 'SHOW FILES';
+            }
+        }
 
     });
