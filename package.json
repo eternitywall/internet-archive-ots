@@ -1,10 +1,10 @@
 {
-  "name": "angular-seed",
+  "name": "internet-archive-ots",
   "private": true,
-  "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
-  "license": "MIT",
+  "version": "0.0.1",
+  "description": "Timestamping the Internet",
+  "repository": "https://github.com/eternitywall/internet-archive-ots",
+  "license": "LGPL",
   "devDependencies": {
     "bower": "^1.7.7",
     "http-server": "^0.9.0",
