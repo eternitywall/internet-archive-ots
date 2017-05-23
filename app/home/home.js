@@ -11,10 +11,10 @@ angular.module('myApp.home', ['ngRoute'])
 }])
 .factory('ArchiveService', function($http,$sce) {
       return {
-        search: function(string) {
+        search: function(string,page) {
           //https://archive.org/advancedsearch.php?q=opentimestamps&fl%5B%5D=description&fl%5B%5D=identifier&fl%5B%5D=publicdate&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=50&page=1&output=json&callback=callback&save=yes#raw
           var url = "https://archive.org/advancedsearch.php";
-          var params = "q="+string+"&rows=50&page=1&output=json&callback=JSON_CALLBACK&save=yes#raw";
+          var params = "q="+string+"&rows=50&page="+page+"&output=json&callback=JSON_CALLBACK&save=yes#raw";
           $sce.trustAsResourceUrl(url+"?"+params);
           return $http.jsonp(url+"?"+params);
         },
@@ -48,27 +48,51 @@ angular.module('myApp.home', ['ngRoute'])
         $scope.input='';
         $scope.showLoader=false;
 
-        $scope.search = function(){
-            if($scope.input==""){
-                return;
-            }
-            $scope.showLoader=true;
+        $scope.page=1;
+        $scope.item4Page=50;
+        $scope.showMore=false;
 
-            ArchiveService.search($scope.input).then(function(data){
+        $scope.searching = function(text,page){
+            ArchiveService.search(text,page).then(function(data){
                 $scope.showLoader=false;
-                $scope.results=data.data.response.docs;
-                $scope.results.forEach(function(item){
+
+                data.data.response.docs.forEach(function(item){
                     item.url = "https://archive.org/download/"+item.identifier+"/"+item.identifier+"_files.xml";
+                    $scope.results.push(item);
                 });
 
                 if($scope.results.length==0){
                     $scope.results.push({title:'No information found'});
+                }
+
+                if(data.data.response.numFound - data.data.response.start < $scope.item4Page){
+                    $scope.showMore=false;
+                } else {
+                    $scope.showMore=true;
                 }
             }).catch(function(err){
                 $scope.showLoader=false;
                 toastr.error('website archive.org not reachable');
             });
         };
+
+        $scope.search = function(){
+            if($scope.input==""){
+                return;
+            }
+            $scope.showLoader = true;
+            $scope.results = [];
+            $scope.page=1;
+
+            $scope.searching($scope.input, $scope.page);
+        };
+
+        $scope.loadMore = function(){
+            $scope.page++;
+            $scope.searching($scope.input, $scope.page);
+        };
+
+
 
         $scope.download = function($event, identifier){
             var tag = $event.currentTarget;

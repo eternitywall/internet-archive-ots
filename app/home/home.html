@@ -39,19 +39,11 @@
          </div>
     </div>
 
-    <!--
-    <table style="width: 100%;">
-    <tr ng-repeat="file in result.files">
-            <td><a download target="_blank" href="{{file.url}}">{{file._name}}</a></td>
-            <td><span>[{{file.size}}]</span></td>
-            <td><span>{{file.sha1}}</span></td>
-            <td ng-show="file.download && file.exist" ><button class="smalldownload"ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></td>
-            <td ng-hide="file.download || !file.exist" ><a class="smalldownload" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">INFO OTS</a></td>
-            <td style="width: 200px;" ng-hide="file.download || !file.exist" ><span>{{file.status}}</span></td>
-    </tr>
-    </table>
-    -->
-
     <hr/>
 </div>
+
+
+    <div style="text-align: center;">
+        <b><a ng-click="loadMore()" ng-show="showMore">Load more results...</a></b>
+    </div>
 </section>
