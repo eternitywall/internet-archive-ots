@@ -9,12 +9,13 @@ angular.module('myApp.home', ['ngRoute'])
     controller: 'HomeCtrl'
   });
 }])
-.factory('ArchiveService', function($http) {
+.factory('ArchiveService', function($http,$sce) {
       return {
         search: function(string) {
           //https://archive.org/advancedsearch.php?q=opentimestamps&fl%5B%5D=description&fl%5B%5D=identifier&fl%5B%5D=publicdate&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=50&page=1&output=json&callback=callback&save=yes#raw
           var url = "https://archive.org/advancedsearch.php";
           var params = "q="+string+"&rows=50&page=1&output=json&callback=JSON_CALLBACK&save=yes#raw";
+          $sce.trustAsResourceUrl(url+"?"+params);
           return $http.jsonp(url+"?"+params);
         },
           download: function(identifier) {
@@ -37,9 +38,12 @@ angular.module('myApp.home', ['ngRoute'])
 
         }
 })
+    .config(function($sceDelegateProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist(['**']);
+    })
 
 
-.controller('HomeCtrl', function($scope,ArchiveService,OpenTimestampsService) {
+.controller('HomeCtrl', function($scope,ArchiveService,OpenTimestampsService,toastr) {
         $scope.results = [];
         $scope.input='';
         $scope.showLoader=false;
@@ -62,6 +66,7 @@ angular.module('myApp.home', ['ngRoute'])
                 }
             }).catch(function(err){
                 $scope.showLoader=false;
+                toastr.error('website archive.org not reachable');
             });
         };
 
@@ -151,12 +156,14 @@ angular.module('myApp.home', ['ngRoute'])
                     console.log(err);
                     file.status=err;
                     $scope.$apply();
+                    toastr.error('Verification failed');
                 });
 
             }).catch(function(err){
                console.log(err);
                 var file = getDocumentFile(identifier,hash);
                 file.status = 'Not found';
+                toastr.error('File not found');
             });
         };
 
@@ -188,6 +195,7 @@ angular.module('myApp.home', ['ngRoute'])
             element.href = window.URL.createObjectURL(new Blob([text], {type: 'octet/stream'}));
             element.download = filename;
             element.click();
+            toastr.success('Downloading...');
         }
 
 
