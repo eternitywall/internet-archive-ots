@@ -61,7 +61,7 @@ angular.module('myApp.home', ['ngRoute'])
                     $scope.results.push(item);
                 });
 
-                if($scope.results.length==0){
+                if($scope.results.length === 0){
                     $scope.results.push({title:'No information found'});
                 }
 
@@ -77,7 +77,7 @@ angular.module('myApp.home', ['ngRoute'])
         };
 
         $scope.search = function(){
-            if($scope.input==""){
+            if($scope.input === ""){
                 return;
             }
             $scope.showLoader = true;
@@ -196,7 +196,7 @@ angular.module('myApp.home', ['ngRoute'])
             var result;
             var file;
             $scope.results.forEach(function(item){
-                if(item.identifier == identifier){
+                if(item.identifier === identifier){
                     result = item;
                 }
             });
@@ -272,7 +272,7 @@ angular.module('myApp.home', ['ngRoute'])
         };
 
         function progress( value, tagButton ){
-            if(value==true) {
+            if(value === true) {
                 tagButton.innerHTML = '<div class="smallLoader"></div>IN PROGRESS...';
             } else {
                 tagButton.innerHTML = 'SHOW FILES';
