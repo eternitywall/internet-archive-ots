@@ -106,4 +106,24 @@
       }
     }
   }
+
+  &-error {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    display: block;
+    padding: 10px;
+    border: 1px solid #aa2132;
+    background-color: #fbe3e3;
+    color: #aa2132;
+
+    a {
+      color: #aa2132;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
 }
