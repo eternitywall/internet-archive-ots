@@ -30,7 +30,7 @@
             <div class="clearfix"></div>
             <div class="col-lg-4 col-md-8 col-sm-8"><a download target="_blank" href="{{file.url}}">{{file._name}}</a></div>
             <div class="col-lg-1 col-md-4 col-sm-4" style="text-align: right"><span>{{file.humanFileSize}}</span></div>
-            <div class="col-lg-4 col-md-8 col-sm-8"><span>{{file.sha1}}</span></div>
+            <div class="col-lg-4 col-md-8 col-sm-8"><span style="font-family: courier; font-size: small;">{{file.sha1}}</span></div>
             <div class="col-lg-3 col-md-4 col-sm-4">
                 <div ng-show="file.download && file.exist" ><button class="smalldownload"ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></div>
                 <div ng-hide="file.download || !file.exist" ><a class="smalldownload" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">INFO OTS</a></div>
