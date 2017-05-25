@@ -148,10 +148,11 @@ angular.module('myApp.search', ['ngRoute'])
         };
 
         $scope.getOts = function(identifier,hash,name){
+            var element;
             OpenTimestampsService.timestamp(hash).then(function(data) {
                 //console.log(data);
                 var file = getDocumentFile(identifier,hash);
-                file.success = "Downloading...";
+                file.success = "Downloading and verifying...";
 
                 var timestamp=new Uint8Array(data.data);
                 var hexHeader = "004f70656e54696d657374616d7073000050726f6f6600bf89e2e884e8929401";
@@ -170,7 +171,7 @@ angular.module('myApp.search', ['ngRoute'])
                 var ots=bytesToHex(buffer);
                 file.ots=ots;
                 //console.log(ots);
-                download(name+".ots",buffer);
+                element = download(name+".ots",buffer);
                 file.download=false;
 
 
@@ -186,16 +187,23 @@ angular.module('myApp.search', ['ngRoute'])
                     $scope.$apply();
                 }).catch(function(err) {
                     console.log(err);
-                    file.error='Verification failed';
+                    file.error = 'We are sorry, something failed, try with another browser';
                     $scope.$apply();
-                    console.error('Verification failed');
+
                 });
 
             }).catch(function(err){
-               console.log(err);
+                console.log(err);
                 var file = getDocumentFile(identifier,hash);
-                file.error = 'Not found';
-                console.error('File not found');
+
+                if(err instanceof ReferenceError) {
+                  document.body.appendChild(element);
+                  element.click();
+                  document.body.removeChild(element);
+                  file.error = 'We are sorry, in-browser verification is not supported on your browser, try with client side validation';
+                } else {
+                  file.error = 'We are sorry, it looks we haven\'t the ots for this file';
+                }
             });
         };
 
@@ -231,10 +239,9 @@ angular.module('myApp.search', ['ngRoute'])
             element.setAttribute('target', '_blank');
             element.href = window.URL.createObjectURL(new Blob([text], {type: 'octet/stream'}));
             element.download = filename;
-            document.body.appendChild(element);
             element.click();
-            document.body.removeChild(element);
             console.log('Downloading...');
+            return element;
         }
 
 
