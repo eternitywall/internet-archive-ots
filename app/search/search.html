@@ -48,13 +48,13 @@
             <div class="search-result-files-tr" ng-repeat="file in result.files" ng-class="{'search-result-files-tr_noticed': !file.download && file.exist}">
                 <div class="search-result-files-td search-result-files-td_name">
                     <a download target="_blank" href="{{file.url}}">{{file._name}}</a>
-                    <span>{{file.humanFileSize}}</span>
+                    &nbsp;&nbsp;<span style="color:gray;">{{file.humanFileSize}}</span>
                 </div>
                 <div class="search-result-files-td search-result-files-td_hash" style="text-align: right;">
                     <span style="font-family: courier; font-size: small;">{{file.sha1}}</span>
                 </div>
                 <div class="search-result-files-td search-result-files-td_download" style="width:130px;">
-                    <div ng-show="file.download && file.exist" ><a class="search-result-files-download" ng-click="getOts(result.identifier,file.sha1,file._name)">Download OTS</a></div>
+                    <div ng-show="file.download && file.exist" ><a class="search-result-files-download" ng-click="getOts(result.identifier,file.sha1,file._name)" style="cursor: pointer;">Download OTS</a></div>
                     <div ng-hide="file.download || !file.exist" ><a class="search-result-files-download" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">Info OTS</a></div>
                 </div>
                 <div class="search-result-files-notice" ng-show="file.status!=''">
