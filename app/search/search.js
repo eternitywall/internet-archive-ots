@@ -1,58 +1,15 @@
 'use strict';
 
 
-angular.module('myApp.home', ['ngRoute'])
+angular.module('myApp.search', ['ngRoute'])
 
 .config(['$routeProvider','$httpProvider', function($routeProvider,$httpProvider) {
-  $routeProvider.when('/home', {
-    templateUrl: 'home/home.html',
-    controller: 'HomeCtrl'
+  $routeProvider.when('/search', {
+    templateUrl: 'search/search.html',
+    controller: 'SearchCtrl'
   });
 }])
-.factory('ArchiveService', function($http,$sce) {
-      return {
-        search: function(string,page) {
-          //https://archive.org/advancedsearch.php?q=opentimestamps&fl%5B%5D=description&fl%5B%5D=identifier&fl%5B%5D=publicdate&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=50&page=1&output=json&callback=callback&save=yes#raw
-          var url = "https://archive.org/advancedsearch.php";
-          var params = "q="+string+"&rows=50&page="+page+"&output=json&callback=JSON_CALLBACK&save=yes#raw";
-          $sce.trustAsResourceUrl(url+"?"+params);
-          return $http.jsonp(url+"?"+params);
-        },
-          download: function(identifier) {
-              //https://archive.org/download/opentimestamps-calendar-backups/opentimestamps-calendar-backups_files.xml
-              // redirect to : 'https://ia801509.us.archive.org/13/items/opentimestamps-calendar-backups/opentimestamps-calendar-backups_files.xml#raw';
-              var url = "https://api.eternitywall.com/archive-proxy/" + identifier;
-              return $http.get(url);
-          }
-      }
-})
-.factory('OpenTimestampsService', function($http) {
-        return {
-            timestamp: function(hash) {
-                //https://alice.btc.calendar.opentimestamps.org/timestamp/e8fb8fa92c9c116f58c0d35d789939be69472529
-                //var url = "http://alice.btc.calendar.opentimestamps.org/timestamp/57cfa5c46716df9bd9e83595bce439c58108d8fcc1678f30d4c6731c3f1fa6c79ed712c66fb1ac8d4e4eb0e7";
-                var url = "https://internetarchive.calendar.opentimestamps.org/timestamp/";
-                url += hash;
-                return $http.get(url,{responseType: "arraybuffer"});
-            }
-
-        }
-})
-    .config(function($sceDelegateProvider) {
-        $sceDelegateProvider.resourceUrlWhitelist(['**']);
-    })
-
-
-
-    .controller('HomeCtrl', function($scope, $location) {
-        $scope.input = '';
-
-        $scope.search = function () {
-            $location.path( 'search/' + $scope.input);
-        };
-    });
-/*
-.controller('HomeCtrl', function($scope,ArchiveService,OpenTimestampsService,toastr) {
+.controller('SearchCtrl', function($scope,ArchiveService,OpenTimestampsService,toastr) {
         $scope.results = [];
         $scope.input='';
         $scope.showLoader=false;
@@ -296,4 +253,3 @@ angular.module('myApp.home', ['ngRoute'])
         }
 
     });
-*/

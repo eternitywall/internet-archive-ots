@@ -1,54 +1,10 @@
-<section class="intro">
-    <p class="timestamp-of">
-        Timestamping the Internet
-    </p>
-
-    <form>
-    <div class="form-group inputbar">
-        <input type="text" name="input" ng-model="input" placeholder="Search on Archive.org" class="form-control"/>
-    </div>
-    </br>
-    <button type="submit" class="download" id="download" ng-click="search()">SEARCH ON ARCHIVE.ORG</button>
-    <br>
+<section class="content search">
+    <h1>Timestamping the Internet</h1>
+    <form action="" class="search-form">
+        <div class="search-controls">
+            <input type="text" class="search-input" placeholder="Search on Archive.org" ng-model="input" >
+            <button type="submit" class="search-button" ng-click="search()">Search</button>
+        </div>
+        <div class="search-example">Example: Google.com</div>
     </form>
-</section>
-
-<div class="loader" ng-show="showLoader"></div>
-
-<section class="container">
-
-<div ng-repeat="result in results" class="search-result-i">
-    <div class="search-result-title">{{ result.title }}</div>
-    <div>
-      <b><a href="https://archive.org/details/{{result.identifier}}">{{ result.identifier }}</a></b>
-    </div>
-    <div>
-      {{ result.description }}
-    </div>
-    <br>
-    <p>
-        <button class="download" ng-click="download($event,result.identifier)">Show files</button>
-    </p>
-
-    <div style="width: 100%;">
-        <div ng-repeat="file in result.files" class="row">
-            <div class="clearfix"></div>
-            <div class="col-lg-4 col-md-8 col-sm-8"><a download target="_blank" href="{{file.url}}">{{file._name}}</a></div>
-            <div class="col-lg-1 col-md-4 col-sm-4" style="text-align: right"><span>{{file.humanFileSize}}</span></div>
-            <div class="col-lg-4 col-md-8 col-sm-8"><span style="font-family: courier; font-size: small;">{{file.sha1}}</span></div>
-            <div class="col-lg-3 col-md-4 col-sm-4">
-                <div ng-show="file.download && file.exist" ><button class="smalldownload"ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></div>
-                <div ng-hide="file.download || !file.exist" ><a class="smalldownload" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">INFO OTS</a></div>
-                <div ng-hide="file.download || !file.exist" ><span>{{file.status}}</span></div>
-            </div>
-         </div>
-    </div>
-
-    <hr/>
-</div>
-
-
-    <div style="text-align: center;">
-        <b><a ng-click="loadMore()" ng-show="showMore">Load more results...</a></b>
-    </div>
 </section>

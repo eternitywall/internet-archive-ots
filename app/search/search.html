@@ -1,0 +1,117 @@
+<section class="search-result">
+    <form action="" class="search-form">
+        <div class="container">
+            <div class="search-controls">
+                <input type="text" class="search-input" value="" ng-model="input">
+                <button type="submit" class="search-button" ng-click="search()">Search</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+
+<div class="loader" ng-show="showLoader"></div>
+
+
+<section class="container">
+
+    <div ng-repeat="result in results" class="search-result-i">
+
+        <div class="search-result-i">
+            <p class="search-result-title">
+                {{ result.title }}
+            </p>
+            <p class="search-result-description">
+                <a class="search-result-description" href="https://archive.org/details/{{result.identifier}}">{{ result.identifier }}</a>
+            </p>
+            <p>
+                {{ result.description }}
+            </p>
+            <p class="search-result-description">
+                Public data: {{result.publicdate}}
+            </p>
+
+            <a class="search-result-toggle-files" ng-click="download($event,result.identifier)">Show files</a>
+            <!-- <a href="#" class="search-result-toggle-files">Hide files</a> -->
+            <!-- <a href="#" class="search-result-toggle-files search-result-toggle-files_loader">Show files</a> -->
+
+        </div>
+
+        <div class="search-result-files">
+            <div class="search-result-files-tr" ng-repeat="file in result.files" ng-class="{'search-result-files-tr_noticed': !file.download && file.exist}">
+                <div class="search-result-files-td search-result-files-td_name">
+                    <a download target="_blank" href="{{file.url}}">{{file._name}}</a>
+                </div>
+                <div class="search-result-files-td">
+                    <span>[{{file.humanFileSize}}]</span>
+                </div>
+                <div class="search-result-files-td search-result-files-td_hash">
+                    <span style="font-family: courier; font-size: small;">{{file.sha1}}</span>
+                </div>
+                <div class="search-result-files-td search-result-files-td_download">
+                    <div ng-show="file.download && file.exist" ><div class="search-result-files-download" ng-click="getOts(result.identifier,file.sha1,file._name)">Download OTS</div></div>
+                    <div ng-hide="file.download || !file.exist" ><a class="search-result-files-download" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">Info OTS</a></div>
+                </div>
+                <div class="search-result-files-notice" ng-hide="file.download || !file.exist">
+                    {{file.status}}
+                </div>
+            </div>
+        </div>
+    <!--<div class="search-result-files">
+                <div class="search-result-files-tr search-result-files-tr_noticed" ng-repeat="file in result.files">
+                    <div class="search-result-files-td search-result-files-td_name">
+                        <a download target="_blank" href="{{file.url}}">{{file._name}}</a>
+                    </div>
+                    <div class="search-result-files-td" style="text-align: right">
+                        <span>[{{file.humanFileSize}}]</span>
+                    </div>
+                    <div class="search-result-files-td search-result-files-td_hash">
+                        <span style="font-family: courier; font-size: small;">{{file.sha1}}</span>
+                    </div>
+                    <div class="search-result-files-td search-result-files-td_download">
+                        <div ng-show="file.download && file.exist" ><div class="search-result-files-download" ng-click="getOts(result.identifier,file.sha1,file._name)">Download OTS</div></div>
+                        <div ng-hide="file.download || !file.exist" ><a class="search-result-files-download" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">Info OTS</a></div>
+                    </div>
+                    <div class="search-result-files-notice" ng-hide="file.download || !file.exist">
+                        <span>{{file.status}}</span>
+
+                    </div>
+                </div>
+        </div>
+        -->
+    </div>
+
+
+        <!--<div class="search-result-title">{{ result.title }}</div>
+        <div>
+            <b><a href="https://archive.org/details/{{result.identifier}}">{{ result.identifier }}</a></b>
+        </div>
+        <div>
+            {{ result.description }}
+        </div>
+        <br>
+        <p>
+            <button class="download" ng-click="download($event,result.identifier)">Show files</button>
+        </p>
+
+        <div style="width: 100%;">
+            <div ng-repeat="file in result.files" class="row">
+                <div class="clearfix"></div>
+                <div class="col-lg-4 col-md-8 col-sm-8"><a download target="_blank" href="{{file.url}}">{{file._name}}</a></div>
+                <div class="col-lg-1 col-md-4 col-sm-4" style="text-align: right"><span>{{file.humanFileSize}}</span></div>
+                <div class="col-lg-4 col-md-8 col-sm-8"><span style="font-family: courier; font-size: small;">{{file.sha1}}</span></div>
+                <div class="col-lg-3 col-md-4 col-sm-4">
+                    <div ng-show="file.download && file.exist" ><button class="smalldownload"ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></div>
+                    <div ng-hide="file.download || !file.exist" ><a class="smalldownload" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">INFO OTS</a></div>
+                    <div ng-hide="file.download || !file.exist" ><span>{{file.status}}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <hr/>-->
+
+
+    <div style="text-align: center;">
+        <b><a ng-click="loadMore()" ng-show="showMore">Load more results...</a></b>
+    </div>
+</section>

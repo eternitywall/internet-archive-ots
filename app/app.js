@@ -6,6 +6,7 @@ angular.module('myApp', [
   'ngAnimate',
   'toastr',
   'myApp.home',
+  'myApp.search',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
