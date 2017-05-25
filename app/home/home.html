@@ -17,10 +17,15 @@
 
 <section class="container">
 
-<div ng-repeat="result in results">
-    <h3>{{ result.title }}</h3>
-    <b><a href="https://archive.org/details/{{result.identifier}}">{{ result.identifier }}</a></b>
-    <p>{{ result.description }}</p>
+<div ng-repeat="result in results" class="search-result-i">
+    <div class="search-result-title">{{ result.title }}</div>
+    <div>
+      <b><a href="https://archive.org/details/{{result.identifier}}">{{ result.identifier }}</a></b>
+    </div>
+    <div>
+      {{ result.description }}
+    </div>
+    <br>
     <p>
         <button class="download" ng-click="download($event,result.identifier)">Show files</button>
     </p>
