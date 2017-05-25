@@ -42,7 +42,7 @@ angular.module('myApp.search', ['ngRoute'])
     .config(function($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist(['**']);
     })
-.controller('SearchCtrl', function($scope,$routeParams,ArchiveService,OpenTimestampsService,toastr) {
+.controller('SearchCtrl', function($scope,$routeParams,ArchiveService,OpenTimestampsService) {
         $scope.results = [];
         $scope.input=$routeParams.text;
         $scope.showLoader=false;
@@ -78,7 +78,7 @@ angular.module('myApp.search', ['ngRoute'])
                 }
             }).catch(function(err){
                 $scope.showLoader=false;
-                toastr.error('website archive.org not reachable');
+                console.error('website archive.org not reachable');
             });
         };
 
@@ -194,14 +194,14 @@ angular.module('myApp.search', ['ngRoute'])
                     console.log(err);
                     file.status=err;
                     $scope.$apply();
-                    toastr.error('Verification failed');
+                    console.error('Verification failed');
                 });
 
             }).catch(function(err){
                console.log(err);
                 var file = getDocumentFile(identifier,hash);
                 file.status = 'Not found';
-                toastr.error('File not found');
+                console.error('File not found');
             });
         };
 
@@ -238,7 +238,7 @@ angular.module('myApp.search', ['ngRoute'])
             element.href = window.URL.createObjectURL(new Blob([text], {type: 'octet/stream'}));
             element.download = filename;
             element.click();
-            toastr.success('Downloading...');
+            console.log('Downloading...');
         }
 
 
