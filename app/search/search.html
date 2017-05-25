@@ -69,10 +69,10 @@
                     <div ng-hide="file.download || !file.exist" ><a class="search-result-files-view" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">Show Timestamp</a></div>
                 </div>
                 <div class="search-result-files-notice" ng-show="file.success !== '' && file.error === '' ">
-                    {{file.success}}
+                    <p ng-bind-html="trust(file.success)"></p>
                 </div>
                 <div class="search-result-files-error" ng-show="file.error != ''">
-                    {{file.error}}
+                    <p ng-bind-html="trust(file.error)"></p>
                 </div>
             </div>
         </div>

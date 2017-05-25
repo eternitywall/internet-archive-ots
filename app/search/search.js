@@ -42,10 +42,11 @@ angular.module('myApp.search', ['ngRoute'])
     .config(function($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist(['**']);
     })
-.controller('SearchCtrl', function($scope,$routeParams,$location,ArchiveService,OpenTimestampsService) {
+.controller('SearchCtrl', function($scope,$routeParams,$location,$sce,ArchiveService,OpenTimestampsService) {
         $scope.results = [];
         $scope.input=$routeParams.text;
         $scope.showLoader=false;
+        $scope.trust = $sce.trustAsHtml;
 
         // Initialize pagination
         $scope.page=1;
@@ -60,7 +61,6 @@ angular.module('myApp.search', ['ngRoute'])
 
                 data.data.response.docs.forEach(function(item){
                     item.url = "https://archive.org/download/"+item.identifier+"/"+item.identifier+"_files.xml";
-                    item.url
                     var d = new Date(item.publicdate);
                     var options = { year: 'numeric', month: 'long', day: 'numeric' };
                     item.humanDate = d.toLocaleDateString("en",options);
