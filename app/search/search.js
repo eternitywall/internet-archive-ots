@@ -42,7 +42,7 @@ angular.module('myApp.search', ['ngRoute'])
     .config(function($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist(['**']);
     })
-.controller('SearchCtrl', function($scope,$routeParams,ArchiveService,OpenTimestampsService) {
+.controller('SearchCtrl', function($scope,$routeParams,$location,ArchiveService,OpenTimestampsService) {
         $scope.results = [];
         $scope.input=$routeParams.text;
         $scope.showLoader=false;
@@ -54,6 +54,7 @@ angular.module('myApp.search', ['ngRoute'])
 
 
         $scope.searching = function(text,page){
+            $scope.showLoader = true;
             ArchiveService.search(text,page).then(function(data){
                 $scope.showLoader=false;
 
@@ -80,14 +81,7 @@ angular.module('myApp.search', ['ngRoute'])
         };
 
         $scope.search = function(){
-            if($scope.input === ""){
-                return;
-            }
-            $scope.showLoader = true;
-            $scope.results = [];
-            $scope.page=1;
-
-            $scope.searching($scope.input, $scope.page);
+            $location.path( '/search/' + $scope.input);
         };
 
         $scope.loadMore = function(){
@@ -98,7 +92,7 @@ angular.module('myApp.search', ['ngRoute'])
 
         // Startup load search
         if ($scope.input != undefined || $scope.input != ""){
-            $scope.search();
+            $scope.searching($scope.input, $scope.page);
         }
 
 
@@ -132,7 +126,8 @@ angular.module('myApp.search', ['ngRoute'])
                     file.url = "https://archive.org/download/"+identifier+"/"+file._name;
                     file.download = true;
                     file.exist = true;
-                    file.status = "";
+                    file.error = "";
+                    file.success = "";
 
                     if(!file.sha1) {
                         file.download = false;
@@ -156,7 +151,7 @@ angular.module('myApp.search', ['ngRoute'])
             OpenTimestampsService.timestamp(hash).then(function(data) {
                 //console.log(data);
                 var file = getDocumentFile(identifier,hash);
-                file.status = 'Downloading...';
+                file.success = "Downloading...";
 
                 var timestamp=new Uint8Array(data.data);
                 var hexHeader = "004f70656e54696d657374616d7073000050726f6f6600bf89e2e884e8929401";
@@ -182,16 +177,16 @@ angular.module('myApp.search', ['ngRoute'])
                 const OpenTimestamps = require('javascript-opentimestamps');
                 OpenTimestamps.verify(buffer, hexToBytes(hash), true).then(function(result){
                     if (result === undefined) {
-                        file.status='Pending or Bad attestation';
+                        file.error='Pending or Bad attestation';
                         console.log('Pending or Bad attestation');
                     } else {
-                        file.status='Success! Bitcoin attests data existed as of ' + (new Date(result * 1000));
+                        file.success='Success! Bitcoin attests data existed as of ' + (new Date(result * 1000));
                         console.log('Success! Bitcoin attests data existed as of ' + (new Date(result * 1000)));
                     }
                     $scope.$apply();
                 }).catch(function(err) {
                     console.log(err);
-                    file.status='Verification failed';
+                    file.error='Verification failed';
                     $scope.$apply();
                     console.error('Verification failed');
                 });
@@ -199,7 +194,7 @@ angular.module('myApp.search', ['ngRoute'])
             }).catch(function(err){
                console.log(err);
                 var file = getDocumentFile(identifier,hash);
-                file.status = 'Not found';
+                file.error = 'Not found';
                 console.error('File not found');
             });
         };

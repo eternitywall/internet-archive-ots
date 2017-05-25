@@ -1,9 +1,9 @@
 <section class="search-result">
-    <form action="" class="search-form">
+    <form class="search-form">
         <div class="container">
             <div class="search-controls">
                 <input type="text" class="search-input" value="" ng-model="input">
-                <button type="submit" class="search-button" ng-click="search()">Search</button>
+                <button type="button" class="search-button" ng-click="search()">Search</button>
             </div>
         </div>
     </form>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="search-result-files">
-            <div class="search-result-files-tr" ng-repeat="file in result.files" ng-class="{'search-result-files-tr_noticed': !file.download && file.exist}">
+            <div class="search-result-files-tr" ng-repeat="file in result.files" ng-class="{'search-result-files-tr_noticed': file.success !== '' || file.error !== '' }">
                 <div class="search-result-files-td search-result-files-td_name">
                     <a download target="_blank" href="{{file.url}}">{{file._name}}</a>
                     &nbsp;&nbsp;<span style="color:gray;">{{file.humanFileSize}}</span>
@@ -68,8 +68,11 @@
                     <div ng-show="file.download && file.exist" ><a class="search-result-files-download" ng-click="getOts(result.identifier,file.sha1,file._name)" style="cursor: pointer;">Download OTS</a></div>
                     <div ng-hide="file.download || !file.exist" ><a class="search-result-files-download" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">Info OTS</a></div>
                 </div>
-                <div class="search-result-files-notice" ng-show="file.status!=''">
-                    {{file.status}}
+                <div class="search-result-files-notice" ng-show="file.success !== '' && file.error === '' ">
+                    {{file.success}}
+                </div>
+                <div class="search-result-files-error" ng-show="file.error != ''">
+                    {{file.error}}
                 </div>
             </div>
         </div>
