@@ -231,7 +231,9 @@ angular.module('myApp.search', ['ngRoute'])
             element.setAttribute('target', '_blank');
             element.href = window.URL.createObjectURL(new Blob([text], {type: 'octet/stream'}));
             element.download = filename;
+            document.body.appendChild(element);
             element.click();
+            document.body.removeChild(element);
             console.log('Downloading...');
         }
 
