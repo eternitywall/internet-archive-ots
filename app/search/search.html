@@ -49,7 +49,7 @@
             <a class="search-result-toggle-files"
                ng-click="download($event,result.identifier)"
                ng-class="{'search-result-toggle-files_loader': result.loading == true }"
-               ng-hidden="result.files.length > 0 ">Show files</a>
+               ng-hidden="result.files.length > 0 " style="cursor: pointer;">Show files</a>
             <!-- <a href="#" class="search-result-toggle-files">Hide files</a> -->
             <!-- <a href="#" class="search-result-toggle-files search-result-toggle-files_loader">Show files</a> -->
 
@@ -65,8 +65,8 @@
                     <span style="font-family: courier; font-size: small;">{{file.sha1}}</span>
                 </div>
                 <div class="search-result-files-td search-result-files-td_download" style="width:130px;">
-                    <div ng-show="file.download && file.exist" ><a class="search-result-files-download" ng-click="getOts(result.identifier,file.sha1,file._name)" style="cursor: pointer;">Download OTS</a></div>
-                    <div ng-hide="file.download || !file.exist" ><a class="search-result-files-download" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">Info OTS</a></div>
+                    <div ng-show="file.download && file.exist" ><a class="search-result-files-download" ng-click="getOts(result.identifier,file.sha1,file._name)" style="cursor: pointer;">OTS Timestamp</a></div>
+                    <div ng-hide="file.download || !file.exist" ><a class="search-result-files-view" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">Show Timestamp</a></div>
                 </div>
                 <div class="search-result-files-notice" ng-show="file.success !== '' && file.error === '' ">
                     {{file.success}}

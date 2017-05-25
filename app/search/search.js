@@ -200,9 +200,9 @@ angular.module('myApp.search', ['ngRoute'])
                   document.body.appendChild(element);
                   element.click();
                   document.body.removeChild(element);
-                  file.error = 'We are sorry, in-browser verification is not supported on your browser, try with client side validation';
+                  file.error = 'Sorry, in-browser verification is not supported on your browser. Try with Chromium or client-side validation';
                 } else {
-                  file.error = 'We are sorry, it looks we haven\'t the ots for this file';
+                  file.error = 'Sorry, timestamp not yet available for this file';
                 }
             });
         };
