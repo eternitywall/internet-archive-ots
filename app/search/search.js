@@ -204,7 +204,7 @@ angular.module('myApp.search', ['ngRoute'])
                   document.body.appendChild(element);
                   element.click();
                   document.body.removeChild(element);
-                  file.error = 'Sorry, in-browser verification is not supported on your browser. Try with Chromium or client-side validation';
+                  file.error = 'Sorry, in-browser verification is not supported on your browser. Try with Chromium or <a href="https://github.com/opentimestamps/opentimestamps-client" style="text-decoration: underline;">client-side</a> validation';
                 } else {
                   file.error = 'Sorry, timestamp not yet available for this file';
                 }
