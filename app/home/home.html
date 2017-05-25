@@ -29,7 +29,7 @@
         <div ng-repeat="file in result.files" class="row">
             <div class="clearfix"></div>
             <div class="col-lg-4 col-md-8 col-sm-8"><a download target="_blank" href="{{file.url}}">{{file._name}}</a></div>
-            <div class="col-lg-1 col-md-4 col-sm-4"><span>[{{file.size}}]</span></div>
+            <div class="col-lg-1 col-md-4 col-sm-4" style="text-align: right"><span>{{file.humanFileSize}}</span></div>
             <div class="col-lg-4 col-md-8 col-sm-8"><span>{{file.sha1}}</span></div>
             <div class="col-lg-3 col-md-4 col-sm-4">
                 <div ng-show="file.download && file.exist" ><button class="smalldownload"ng-click="getOts(result.identifier,file.sha1,file._name)">Download Ots</button></div>

@@ -127,6 +127,8 @@ angular.module('myApp.home', ['ngRoute'])
                         file.download = false;
                         file.exist = false;
                     }
+
+                    file.humanFileSize = file.size>0 ? humanFileSize(file.size) : "";
                 });
 
             });
@@ -189,6 +191,11 @@ angular.module('myApp.home', ['ngRoute'])
                 file.status = 'Not found';
                 toastr.error('File not found');
             });
+        };
+
+        function humanFileSize(size) {
+            var i = Math.floor( Math.log(size) / Math.log(1024) );
+            return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
         };
 
         function getDocumentFile(identifier,hash){
