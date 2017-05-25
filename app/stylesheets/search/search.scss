@@ -1,0 +1,52 @@
+.search {
+  vertical-align: middle;
+  padding: 40px 10px;
+  background-image: url(../images/search-bg.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+
+  ::placeholder {
+    color: fade-out(#fff, 0.7);
+  }
+
+  .search-form {
+    max-width: 450px;
+  }
+
+  &-form {
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  &-controls {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  &-input {
+    @extend %input;
+    flex-grow: 1;
+    border: 1px solid #fff;
+    padding: 0 15px;
+    background-color: fade-out(#fff, 0.8);
+    color: #fff;
+  }
+
+  &-button {
+    @extend %input;
+    cursor: pointer;
+    padding: 0 20px;
+    background-color: #fff;
+    color: #004eaa;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  &-example {
+    margin-top: 15px;
+    color: #fff;
+    font-size: 14px;
+  }
+}

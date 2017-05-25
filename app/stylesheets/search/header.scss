@@ -1,0 +1,17 @@
+.header {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: #fff;
+  line-height: 80px;
+
+  &-logo {
+    display: inline-block;
+    vertical-align: middle;
+    position: static;
+    left: auto;
+    top: auto;
+    margin: 0;
+  }
+}

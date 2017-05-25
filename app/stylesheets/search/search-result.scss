@@ -1,0 +1,76 @@
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-result {
+  .search-form {
+    padding: 30px 0;
+    background-image: url(../images/search-result-bg.png);
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .search-controls {
+    margin-bottom: 0;
+  }
+
+  &-i {
+    padding-top: 30px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #e1e1e1;
+    }
+  }
+
+  &-title {
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+
+  &-description {
+    font-size: 14px;
+    color: #004eaa;
+  }
+
+  &-toggle-files {
+    @extend %input;
+    transition: 0.3s opacity;
+    display: inline-block;
+    width: 84px;
+    height: 28px;
+    margin: 15px 0 30px;
+    background-color: #004eaa;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    line-height: 28px;
+    font-size: 11px;
+    font-weight: bold;
+
+    &:not(&_load):hover {
+      opacity: 0.9;
+    }
+
+    &_loader {
+      position: relative;
+      text-indent: -99999;
+      font-size: 0;
+
+      &:before {
+        @include image-2x('../images/loader@2x.png');
+        animation: rotate 1s linear infinite;
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 14px;
+        height: 14px;
+        margin: -7px 0 0 -7px;
+        background-image: url(../images/loader.png);
+      }
+    }
+  }
+}
