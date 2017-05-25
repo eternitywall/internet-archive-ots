@@ -4,19 +4,21 @@
 angular.module('myApp.search', ['ngRoute'])
 
 .config(['$routeProvider','$httpProvider', function($routeProvider,$httpProvider) {
-  $routeProvider.when('/search', {
+  $routeProvider.when('/search/:text', {
     templateUrl: 'search/search.html',
     controller: 'SearchCtrl'
   });
 }])
-.controller('SearchCtrl', function($scope,ArchiveService,OpenTimestampsService,toastr) {
+.controller('SearchCtrl', function($scope,$routeParams,ArchiveService,OpenTimestampsService,toastr) {
         $scope.results = [];
-        $scope.input='';
+        $scope.input=$routeParams.text;
         $scope.showLoader=false;
 
+        // Initialize pagination
         $scope.page=1;
         $scope.item4Page=50;
         $scope.showMore=false;
+
 
         $scope.searching = function(text,page){
             ArchiveService.search(text,page).then(function(data){
@@ -57,6 +59,12 @@ angular.module('myApp.search', ['ngRoute'])
             $scope.page++;
             $scope.searching($scope.input, $scope.page);
         };
+
+
+        // Startup load search
+        if ($scope.input != undefined || $scope.input != ""){
+            $scope.search();
+        }
 
 
 

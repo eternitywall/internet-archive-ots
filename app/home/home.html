@@ -1,9 +1,9 @@
 <section class="content search">
     <h1>Timestamping the Internet</h1>
-    <form action="" class="search-form">
+    <form class="search-form" ng-submit="search()">
         <div class="search-controls">
             <input type="text" class="search-input" placeholder="Search on Archive.org" ng-model="input" >
-            <button type="submit" class="search-button" ng-click="search()">Search</button>
+            <button type="button" class="search-button" ng-click="search()">Search</button>
         </div>
         <div class="search-example">Example: Google.com</div>
     </form>
