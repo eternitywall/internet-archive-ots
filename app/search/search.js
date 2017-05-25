@@ -181,8 +181,12 @@ angular.module('myApp.search', ['ngRoute'])
                         file.error='Pending or Bad attestation';
                         console.log('Pending or Bad attestation');
                     } else {
-                        file.success='Success! Bitcoin attests data existed as of ' + (new Date(result * 1000));
-                        console.log('Success! Bitcoin attests data existed as of ' + (new Date(result * 1000)));
+                        var d = new Date(result * 1000);
+                        var date_array = d.toUTCString();
+                        var utc = date_array.split(" ").splice(0,4).join(" ") + " (UTC)";
+
+                        file.success='Success! Bitcoin proves data existed as of ' + utc  ;
+                        console.log('Success! Bitcoin proves data existed as of ' + utc );
                     }
                     $scope.$apply();
                 }).catch(function(err) {
