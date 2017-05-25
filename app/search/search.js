@@ -26,6 +26,11 @@ angular.module('myApp.search', ['ngRoute'])
 
                 data.data.response.docs.forEach(function(item){
                     item.url = "https://archive.org/download/"+item.identifier+"/"+item.identifier+"_files.xml";
+
+                    var d = new Date(item.publicdate);
+                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    item.humanDate = d.toLocaleDateString("en",options);
+
                     $scope.results.push(item);
                 });
 

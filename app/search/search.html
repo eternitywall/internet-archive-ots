@@ -28,7 +28,7 @@
                 {{ result.description }}
             </p>
             <p class="search-result-description">
-                Public data: {{result.publicdate}}
+                {{result.humanDate}}
             </p>
 
             <a class="search-result-toggle-files" ng-click="download($event,result.identifier)">Show files</a>
