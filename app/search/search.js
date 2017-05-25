@@ -59,17 +59,14 @@ angular.module('myApp.search', ['ngRoute'])
 
                 data.data.response.docs.forEach(function(item){
                     item.url = "https://archive.org/download/"+item.identifier+"/"+item.identifier+"_files.xml";
-
+                    item.url
                     var d = new Date(item.publicdate);
                     var options = { year: 'numeric', month: 'long', day: 'numeric' };
                     item.humanDate = d.toLocaleDateString("en",options);
+                    item.loading = false;
 
                     $scope.results.push(item);
                 });
-
-                if($scope.results.length === 0){
-                    $scope.results.push({title:'No information found'});
-                }
 
                 if(data.data.response.numFound - data.data.response.start < $scope.item4Page){
                     $scope.showMore=false;
@@ -107,28 +104,29 @@ angular.module('myApp.search', ['ngRoute'])
 
 
         $scope.download = function($event, identifier){
-            var tag = $event.currentTarget;
-            progress(true, tag);
+
+            // get scope result item
+            var result;
+            $scope.results.forEach(function(item){
+                if(item.identifier === identifier){
+                    result = item;
+                }
+            });
+            if(result === undefined) {
+                return;
+            }
+            result.loading = true;
+
+
             ArchiveService.download(identifier).then(function(data){
                 //console.log(data.data);
                 var x2js = new X2JS();
                 var json  = x2js.xml_str2json(data.data);
                 //console.log(json);
 
-                progress(false, tag);
-
-                // get scope result item
-                var result;
-                $scope.results.forEach(function(item){
-                    if(item.identifier === identifier){
-                        result = item;
-                    }
-                });
-
                 // add files to result
-                if(result !== undefined){
-                    result.files = json.files.file;
-                }
+                result.loading = false;
+                result.files = json.files.file;
 
                 result.files.forEach(function(file){
                     file.url = "https://archive.org/download/"+identifier+"/"+file._name;
