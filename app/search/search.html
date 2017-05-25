@@ -52,7 +52,7 @@
                     <div ng-show="file.download && file.exist" ><div class="search-result-files-download" ng-click="getOts(result.identifier,file.sha1,file._name)">Download OTS</div></div>
                     <div ng-hide="file.download || !file.exist" ><a class="search-result-files-download" target="_blank" href="https://opentimestamps.org/info.html?ots={{file.ots}}">Info OTS</a></div>
                 </div>
-                <div class="search-result-files-notice" ng-hide="file.download || !file.exist">
+                <div class="search-result-files-notice" ng-show="file.status!=''">
                     {{file.status}}
                 </div>
             </div>

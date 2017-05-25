@@ -134,6 +134,7 @@ angular.module('myApp.search', ['ngRoute'])
                     file.url = "https://archive.org/download/"+identifier+"/"+file._name;
                     file.download = true;
                     file.exist = true;
+                    file.status = "";
 
                     if(!file.sha1) {
                         file.download = false;
@@ -192,7 +193,7 @@ angular.module('myApp.search', ['ngRoute'])
                     $scope.$apply();
                 }).catch(function(err) {
                     console.log(err);
-                    file.status=err;
+                    file.status='Verification failed';
                     $scope.$apply();
                     console.error('Verification failed');
                 });
