@@ -112,3 +112,12 @@
   -webkit-line-clamp: 4; /* number of lines to show */
   -webkit-box-orient: vertical;
 }
+
+.search-result-description {
+  line-height: 40px;
+}
+.search-result-date {
+  font-size: 14px;
+  line-height: 40px;
+  color: gray;
+}
