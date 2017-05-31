@@ -4,9 +4,10 @@
 angular.module('myApp', [
   'ngRoute',
   'ngAnimate',
+  'ngFileSaver',
   'myApp.home',
   'myApp.search',
-  'myApp.version'
+  'myApp.version',
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');

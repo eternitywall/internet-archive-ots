@@ -42,7 +42,7 @@ angular.module('myApp.search', ['ngRoute'])
     .config(function($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist(['**']);
     })
-.controller('SearchCtrl', function($scope,$routeParams,$location,$sce,ArchiveService,OpenTimestampsService) {
+.controller('SearchCtrl', function($scope, $routeParams, $location, $sce, ArchiveService, OpenTimestampsService, FileSaver, Blob) {
         $scope.results = [];
         $scope.input=$routeParams.text;
         $scope.showLoader=false;
@@ -238,15 +238,8 @@ angular.module('myApp.search', ['ngRoute'])
 
 
         function download(filename,text){
-            var element = document.createElement('a');
-            element.setAttribute('target', '_blank');
-            element.href = window.URL.createObjectURL(new Blob([text], {type: 'octet/stream'}));
-            element.download = filename;
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-            console.log('Downloading...');
-            return element;
+            var data = new Blob([text], { type: 'octet/stream' });
+            FileSaver.saveAs(data, filename);
         }
 
 
