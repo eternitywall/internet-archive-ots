@@ -170,9 +170,7 @@ angular.module('myApp.search', ['ngRoute'])
 
                 var ots=bytesToHex(buffer);
                 file.ots=ots;
-                //console.log(ots);
-                element = download(name+".ots",buffer);
-                file.download=false;
+
 
 
                 const OpenTimestamps = require('javascript-opentimestamps');
@@ -196,14 +194,15 @@ angular.module('myApp.search', ['ngRoute'])
 
                 });
 
+                download(name+".ots",buffer);
+                file.download=false;
+
             }).catch(function(err){
                 console.log(err);
                 var file = getDocumentFile(identifier,hash);
 
                 if(err instanceof ReferenceError) {
-                  document.body.appendChild(element);
-                  element.click();
-                  document.body.removeChild(element);
+
                   file.error = 'Sorry, in-browser verification is not supported on your browser. Try with Chromium or <a href="https://github.com/opentimestamps/opentimestamps-client" style="text-decoration: underline;">client-side</a> validation';
                 } else {
                   file.error = 'Sorry, timestamp not yet available for this file';
@@ -243,7 +242,9 @@ angular.module('myApp.search', ['ngRoute'])
             element.setAttribute('target', '_blank');
             element.href = window.URL.createObjectURL(new Blob([text], {type: 'octet/stream'}));
             element.download = filename;
+            document.body.appendChild(element);
             element.click();
+            document.body.removeChild(element);
             console.log('Downloading...');
             return element;
         }
